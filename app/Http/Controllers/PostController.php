@@ -31,6 +31,22 @@ class PostController extends Controller
             ->with('success', 'Post created successfully.');
     }
 
+    public function edit(Post $post)
+    {
+        return inertia('Posts/Edit',compact('post'));
+    }
+
+    public function update(Request $request,Post $post)
+    {
+        $request->validate([
+            'title' => 'required|string',
+            'body' => 'required|string',
+        ]);
+
+        $post->update($request->all());
+
+        return redirect(route('posts.index'));
+    }
     public function destroy(Post $post)
     {
         $post->delete();

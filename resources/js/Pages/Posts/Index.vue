@@ -23,6 +23,8 @@
                                     <th scope="col" class="px-6 py-4">Body</th>
                                     <th scope="col" class="px-6 py-4">Created At</th>
                                     <th scope="col" class="px-6 py-4">Updated At</th>
+                                    <th scope="col" class="px-6 py-4">Edit</th>
+                                    <th scope="col" class="px-6 py-4">Delete</th>
                                 </tr>
                                 </thead>
                                 <tbody v-for="post in posts">
@@ -32,6 +34,16 @@
                                     <td class="whitespace-nowrap px-6 py-4">{{ post.body }}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{ post.created_at }}</td>
                                     <td class="whitespace-nowrap px-6 py-4">{{ post.updated_at }}</td>
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        <Link class="text-sky-500" :href="route('posts.edit', post.id)">
+                                            Edit
+                                        </Link>
+                                    </td>
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        <p @click.prevent="deletePost(post.id)" class="text-red-500 cursor-pointer">
+                                            Delete
+                                        </p>
+                                    </td>
 
                                 </tr>
 
@@ -56,6 +68,9 @@ export default {
         router() {
             return router
         },
+        deletePost(id){
+            this.$inertia.delete(`/posts/${id}`)
+        }
 
     },
     components: {
